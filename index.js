@@ -22,9 +22,9 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const taskCollection = client.db("doTask").collection("tasks");
+    const usersCollection = client.db("doTask").collection("users");
     app.post("/tasks", async (req, res) => {
       const task = req.body;
-      console.log(task);
 
       const result = await taskCollection.insertOne(task);
 
@@ -94,6 +94,13 @@ async function run() {
       };
 
       const result = await taskCollection.updateOne(query, updateTask, options);
+      res.send(result);
+    });
+
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+
+      const result = await usersCollection.insertOne(user);
       res.send(result);
     });
   } finally {

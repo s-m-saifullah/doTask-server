@@ -106,7 +106,7 @@ async function run() {
 
       let result;
 
-      if (isUserExists) {
+      if (!isUserExists) {
         result = await usersCollection.insertOne(newUser);
       } else {
         result = `Welcome Back ${newUser.name}`;

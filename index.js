@@ -109,7 +109,10 @@ async function run() {
       if (!isUserExists) {
         result = await usersCollection.insertOne(newUser);
       } else {
-        result = `Welcome Back ${newUser.name}`;
+        result = JSON.stringify({
+          userExist: true,
+          message: `Welcome Back ${newUser.name}`,
+        });
       }
 
       res.send(result);

@@ -33,10 +33,12 @@ async function run() {
 
     app.get("/tasks", async (req, res) => {
       const queryStr = req.query.q;
+      const email = req.query.email;
       const query = queryStr === "completed";
-      const filter = { completed: query };
+      const filter = { completed: query, email: email };
       const cursor = taskCollection.find(filter);
       const result = await cursor.toArray();
+
       res.send(result);
     });
 

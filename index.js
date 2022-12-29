@@ -98,9 +98,20 @@ async function run() {
     });
 
     app.post("/users", async (req, res) => {
-      const user = req.body;
+      const newUser = req.body;
+      const users = await usersCollection.find({}).toArray();
+      const isUserExists = users.find((user) => user.email === newUser.email)
+        ? true
+        : false;
 
-      const result = await usersCollection.insertOne(user);
+      let result;
+
+      if (isUserExists) {
+        result = await usersCollection.insertOne(newUser);
+      } else {
+        result = `Welcome Back ${newUser.name}`;
+      }
+
       res.send(result);
     });
   } finally {
